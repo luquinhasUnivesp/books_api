@@ -31,6 +31,15 @@ public class BooksController {
     @GetMapping(value = "/{id}")
     public List<BookDTO> getBookById(@PathVariable Long id) {
         return  repository.findById(id).stream().map(BookDTO::new).toList();
+    }
 
+    @GetMapping(value = "/genre/{genre}")
+    public List<BookDTO> getBooksByGenre(@PathVariable String genre) {
+        return repository.findByGenre(genre).stream().map(BookDTO::new).toList();
+    }
+
+    @GetMapping(value = "/author/{author}")
+    public List<BookDTO> getBooksByAuthor(@PathVariable String author){
+        return repository.findByAuthor(author).stream().map(BookDTO::new).toList();
     }
 }
