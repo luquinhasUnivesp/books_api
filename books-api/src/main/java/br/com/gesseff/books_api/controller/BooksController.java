@@ -27,4 +27,10 @@ public class BooksController {
     public List<BookDTO> listBooks() {
         return repository.findAll().stream().map(BookDTO::new).toList();
     }
+
+    @GetMapping(value = "/{id}")
+    public List<BookDTO> getBookById(@PathVariable Long id) {
+        return  repository.findById(id).stream().map(BookDTO::new).toList();
+
+    }
 }
