@@ -26,7 +26,7 @@ public class BookService {
     }
 
     public BookDTO getBookById(Long id){
-        Book book = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Livro não encontrado"));
+        Book book = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Livro não encontrado com o ID: " + id));
         return new BookDTO(book);
     }
 
