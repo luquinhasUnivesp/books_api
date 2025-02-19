@@ -27,9 +27,10 @@ books-api/
 │-- src/
 │   ├── main/
 │   │   ├── java/br/com/gesseff/books_api/
-│   │   │   ├── controller/  # Controllers da API
+│   │   │   ├── controller/   # Controllers da API
 │   │   │   ├── service/      # Regras de negócio
 │   │   │   ├── repository/   # Interação com o banco de dados 
+│   │   │   ├── exceptions/   # Tratamento global de exceções
 │   │   │   ├── model/        # Entidades do sistema
 │   │   │   ├── dto/          # Objetos de transferência de dados
 │   │   ├── resources/
