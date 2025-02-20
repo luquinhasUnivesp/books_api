@@ -6,7 +6,7 @@ Este repositório contém a implementação de uma API para gerenciamento de liv
 
 ### 🔹 Tecnologias Utilizadas
 - **Java 17**
-- **Spring Boot** (Framework principal para desenvolvimento da API)
+- **Spring Boot 3** (Framework principal para desenvolvimento da API)
 - **Spring Data JPA** (Para interação com banco de dados)
 - **MySQL** (Banco de dados relacional)
 - **JUnit 5 & Mockito** (Para testes automatizados)
@@ -35,6 +35,7 @@ books-api/
 │   │   │   ├── dto/          # Objetos de transferência de dados
 │   │   ├── resources/
 │   │       ├── application.properties  # Configurações da API
+│   │       ├── data.sql                # Script SQL para popular o banco de dados
 │   ├── test/java/br/com/gesseff/books_api/ # Testes unitários
 ```
 
@@ -62,7 +63,19 @@ books-api/
 - Migrar a configuração da aplicação de application.properties para application.yml para melhor organização e leitura.
 
 
-### 🔹 Desafios Encontrados
+### 🔹 Desafios e Erros Encontrados
+
+- **Ambiguous Handler Methods Mapped**:  
+  Durante a implementação, dois métodos do `BooksController` foram mapeados para endpoints que o Spring Boot interpretava como iguais, resultando em um conflito de mapeamento de URL.
+
+
+- **Atributos Nulos no Endpoint GET /listBooks**:  
+  Ao chamar o endpoint responsável por retornar a lista de livros, todos os atributos dos objetos retornavam `null`, mesmo com dados armazenados no banco de dados. O problema ocorreu devido ao erro ao transformar dados de uma classe para outra.
+
+
+- **Configuração do Lombok**:  
+  As configurações do Lombok não estava funcionando inicialmente, apesar de ter as dependências no `pom.xml`. Mesmo com as anotações `@Getter` e `@Setter`, os métodos não eram gerados automaticamente. O problema foi resolvido ajustando a configuração do `pom.xml`.
+
 
 
 
@@ -91,8 +104,8 @@ CREATE DATABASE books_api;
 - Atualizar as configurações do `application.properties` com suas credenciais:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/books_api
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
+spring.datasource.username=username
+spring.datasource.password=password
 ```
 
 ### **3. Executar a aplicação:**
