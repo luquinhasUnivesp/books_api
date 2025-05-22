@@ -46,4 +46,10 @@ public class BooksController {
     public List<BookDTO> getBooksByAuthor(@PathVariable String author) {
         return service.getBooksByAuthor(author);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        service.deleteBook(id);
+        return ResponseEntity.noContent().build();
+    }
 }
