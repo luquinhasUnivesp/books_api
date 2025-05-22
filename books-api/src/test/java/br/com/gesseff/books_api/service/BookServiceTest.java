@@ -14,13 +14,13 @@ import static org.mockito.Mockito.*;
 
 class BookServiceTest {
 
-    @Mock
+    @Mock // Mocks the repository
     private BookRepository repository;
 
-    @InjectMocks
+    @InjectMocks // Injects the mocks into the service
     private BookService service;
 
-    @BeforeEach
+    @BeforeEach // será executado antes de cada teste
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }

@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
-    List<Book> findByGenre(String genre);
+public interface BookRepository extends JpaRepository<Book, Long> { // generics que recebe a entidade e o tipo do id
 
-    List<Book> findByAuthor(String author);
+    List<Book> findByGenre(String genre); // método que retorna uma lista de livros de um gênero específico
+
+    List<Book> findByAuthor(String author); // método que retorna uma lista de livros de um autor específico
 }
 
