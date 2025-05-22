@@ -37,4 +37,8 @@ public class BookService {
     public List<BookDTO> getBooksByAuthor(String author) {
         return repository.findByAuthor(author).stream().map(BookDTO::new).toList();
     }
+
+    public void deleteBook(Long id) {
+        repository.deleteById(id);
+    }
 }
