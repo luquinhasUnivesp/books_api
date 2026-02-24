@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -16,6 +19,9 @@ class BookServiceTest {
 
     @Mock
     private BookRepository repository;
+
+    @Mock
+    private RecentlyViewedService recentlyViewedService;
 
     @InjectMocks
     private BookService service;
@@ -57,7 +63,7 @@ class BookServiceTest {
         book.setGenre("Genre");
         book.setDescription("Description");
 
-        when(repository.findAll()).thenReturn(java.util.List.of(book));
+        when(repository.findAll()).thenReturn(List.of(book));
 
         var result = service.listBooks();
 
@@ -78,7 +84,7 @@ class BookServiceTest {
         book.setGenre("Genre");
         book.setDescription("Description");
 
-        when(repository.findById(1L)).thenReturn(java.util.Optional.of(book));
+        when(repository.findById(1L)).thenReturn(Optional.of(book));
 
         var result = service.getBookById(1L);
 
@@ -87,6 +93,7 @@ class BookServiceTest {
         assertEquals("Title", result.getTitle());
 
         verify(repository, times(1)).findById(1L);
+        verify(recentlyViewedService).addRecentlyViewedBook(1L);
     }
 
     @Test
@@ -98,7 +105,7 @@ class BookServiceTest {
         book.setGenre("Genre");
         book.setDescription("Description");
 
-        when(repository.findByGenre("Genre")).thenReturn(java.util.List.of(book));
+        when(repository.findByGenre("Genre")).thenReturn(List.of(book));
 
         var result = service.getBooksByGenre("Genre");
 
