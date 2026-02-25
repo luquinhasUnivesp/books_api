@@ -3,6 +3,7 @@ package br.com.gesseff.books_api.controller;
 import br.com.gesseff.books_api.dto.BookDTO;
 import br.com.gesseff.books_api.model.Book;
 import br.com.gesseff.books_api.service.BookService;
+import br.com.gesseff.books_api.service.RecentlyViewedService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,14 @@ import java.util.List;
 @RequestMapping("/books")
 public class BooksController {
 
-    @Autowired
+
     private BookService service;
+    private RecentlyViewedService recentlyViewedService;
+
+    public BooksController(BookService service, RecentlyViewedService recentlyViewedService) {
+        this.service = service;
+        this.recentlyViewedService = recentlyViewedService;
+    }
 
     @PostMapping
     @Transactional
@@ -38,13 +45,18 @@ public class BooksController {
     }
 
     @GetMapping(value = "/genre/{genre}")
-    public List<BookDTO> getBooksByGenre(@PathVariable String genre) {
-        return service.getBooksByGenre(genre);
+    public ResponseEntity<List<BookDTO>> getBooksByGenre(@PathVariable String genre) {
+        return ResponseEntity.ok(service.getBooksByGenre(genre));
     }
 
     @GetMapping(value = "/author/{author}")
-    public List<BookDTO> getBooksByAuthor(@PathVariable String author) {
-        return service.getBooksByAuthor(author);
+    public ResponseEntity<List<BookDTO>> getBooksByAuthor(@PathVariable String author) {
+        return ResponseEntity.ok(service.getBooksByAuthor(author));
+    }
+
+    @GetMapping(value = "/recently-viewed")
+    public ResponseEntity<List<BookDTO>> getRecentlyViewedBooks() {
+        return ResponseEntity.ok(recentlyViewedService.getRecentlyViewedBooks());
     }
 
     @DeleteMapping(value = "/{id}")

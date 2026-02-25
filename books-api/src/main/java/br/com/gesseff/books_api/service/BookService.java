@@ -14,8 +14,13 @@ import java.util.List;
 @Service
 public class BookService {
 
-    @Autowired
     private BookRepository repository;
+    private final RecentlyViewedService recentlyViewedService;
+
+    public BookService(BookRepository repository,RecentlyViewedService recentlyViewedService) {
+        this.repository = repository;
+        this.recentlyViewedService = recentlyViewedService;
+    }
 
     public Book addBook(BookDTO book) {
         Book newBook = new Book(book);
@@ -29,6 +34,7 @@ public class BookService {
 
     public BookDTO getBookById(Long id) {
         Book book = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Livro não encontrado com o ID: " + id));
+        recentlyViewedService.addRecentlyViewedBook(id);
         return new BookDTO(book);
     }
 
